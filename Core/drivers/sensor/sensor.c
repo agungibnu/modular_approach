@@ -7,7 +7,6 @@
 
 
 #include "sensor.h"
-#include "main.h"
 
 void sensor_init(){
 

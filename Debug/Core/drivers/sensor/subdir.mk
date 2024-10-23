@@ -5,12 +5,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/drivers/sensor/bmp280.c \
 ../Core/drivers/sensor/sensor.c 
 
 OBJS += \
+./Core/drivers/sensor/bmp280.o \
 ./Core/drivers/sensor/sensor.o 
 
 C_DEPS += \
+./Core/drivers/sensor/bmp280.d \
 ./Core/drivers/sensor/sensor.d 
 
 
@@ -21,7 +24,7 @@ Core/drivers/sensor/%.o Core/drivers/sensor/%.su Core/drivers/sensor/%.cyclo: ..
 clean: clean-Core-2f-drivers-2f-sensor
 
 clean-Core-2f-drivers-2f-sensor:
-	-$(RM) ./Core/drivers/sensor/sensor.cyclo ./Core/drivers/sensor/sensor.d ./Core/drivers/sensor/sensor.o ./Core/drivers/sensor/sensor.su
+	-$(RM) ./Core/drivers/sensor/bmp280.cyclo ./Core/drivers/sensor/bmp280.d ./Core/drivers/sensor/bmp280.o ./Core/drivers/sensor/bmp280.su ./Core/drivers/sensor/sensor.cyclo ./Core/drivers/sensor/sensor.d ./Core/drivers/sensor/sensor.o ./Core/drivers/sensor/sensor.su
 
 .PHONY: clean-Core-2f-drivers-2f-sensor
 

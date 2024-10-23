@@ -1,0 +1,4 @@
+../Core/drivers/sensor/bmp280.c:28:19:BMP280_WriteRegister	32	static
+../Core/drivers/sensor/bmp280.c:34:19:BMP280_ReadRegister	24	static
+../Core/drivers/sensor/bmp280.c:42:6:BMP280_Init	8	static
+../Core/drivers/sensor/bmp280.c:48:9:BMP280_ReadTemperature	16	static

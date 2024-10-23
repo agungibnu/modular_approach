@@ -1,0 +1,4 @@
+../Core/drivers/sensor/bmp280.c:28:19:BMP280_WriteRegister	1
+../Core/drivers/sensor/bmp280.c:34:19:BMP280_ReadRegister	1
+../Core/drivers/sensor/bmp280.c:42:6:BMP280_Init	1
+../Core/drivers/sensor/bmp280.c:48:9:BMP280_ReadTemperature	1

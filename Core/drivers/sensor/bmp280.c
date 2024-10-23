@@ -4,10 +4,8 @@
  *  Created on: Oct 23, 2024
  *      Author: Agung Ibnu
  */
-
-
 #include "stm32l4xx_hal.h"
-
+#include "main.h"
 
 // BMP280 I2C address (SDO = GND: 0x76, SDO = VCC: 0x77)
 #define BMP280_ADDRESS 0x76 << 1  // Shift left by 1 for 7-bit address format
@@ -43,6 +41,7 @@ void BMP280_Init(void) {
     // Example: Set to normal mode with oversampling settings
     BMP280_WriteRegister(BMP280_REG_CTRL_MEAS, 0x27);  // Temp x1, Press x1, Normal mode
     BMP280_WriteRegister(BMP280_REG_CONFIG, 0xA0);  // Config settings (standby, filter)
+    serialPrint("BMP280 Initialization");
 }
 
 int32_t BMP280_ReadTemperature(void) {
@@ -52,5 +51,24 @@ int32_t BMP280_ReadTemperature(void) {
     return temp;
 }
 
+// Placeholder for calibration parameters from BMP280 (normally read from the sensor)
+int32_t t_fine = 0;
 
+float BMP280_CompensateTemperature(int32_t raw_temp) {
+    // Compensation formulas from the BMP280 datasheet
+    int32_t var1, var2;
+
+    // Example calibration data (to be read from sensor)
+    int32_t dig_T1 = 27504;  // Example value
+    int32_t dig_T2 = 26435;  // Example value
+    int32_t dig_T3 = -1000;  // Example value
+
+    var1 = ((((raw_temp >> 3) - (dig_T1 << 1))) * (dig_T2)) >> 11;
+    var2 = (((((raw_temp >> 4) - (dig_T1)) * ((raw_temp >> 4) - (dig_T1))) >> 12) * (dig_T3)) >> 14;
+
+    t_fine = var1 + var2;
+    float T = (t_fine * 5 + 128) >> 8;
+
+    return T / 100.0f;  // Return the temperature in Celsius
+}
 

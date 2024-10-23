@@ -15,5 +15,6 @@
 void BMP280_Init(void);
 
 int32_t BMP280_ReadTemperature(void);
+float BMP280_CompensateTemperature(int32_t raw_temp);
 
 #endif /* DRIVERS_SENSOR_BMP280_H_ */

@@ -24,6 +24,8 @@
 #include <string.h>
 #include <stdio.h>
 #include "sensor.h"
+#include "bmp280.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -107,14 +109,16 @@ int main(void)
   MX_USART1_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  sensor_init();
-  SensorData data = sensor_readData();
-  sprintf(text, "Temperature : %.2f", data.temperature);
-  serialPrint(text);
+//  sensor_init();
+//  SensorData data = sensor_readData();
+//  sprintf(text, "Temperature : %.2f", data.temperature);
+//  serialPrint(text);
+//
+//  float baro = get_barometric();
+//  sprintf(text, "Barometric : %.2f", baro);
+//  serialPrint(text);
+  BMP280_Init();
 
-  float baro = get_barometric();
-  sprintf(text, "Barometric : %.2f", baro);
-  serialPrint(text);
 
   /* USER CODE END 2 */
 
@@ -122,6 +126,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  int32_t raw_tmp = BMP280_ReadTemperature();
+	  float temperature = BMP280_CompensateTemperature(raw_tmp);
+	  sprintf(text,"Temp : %.2f", temperature);
+	  serialPrint(text);
+	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

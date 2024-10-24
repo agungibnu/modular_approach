@@ -73,7 +73,6 @@ int32_t BMP280_GetRawTemperature(void) {
     return raw_temp;  // Return the raw 20-bit temperature value
 }
 
-
 int32_t BMP280_GetRawPressure(void) {
     uint8_t press_data[3];  // Array to store the three pressure registers
 
@@ -87,7 +86,6 @@ int32_t BMP280_GetRawPressure(void) {
 
     return raw_press;  // Return the raw 20-bit pressure value
 }
-
 
 void BMP280_ReadCalibrationData(void) {
     uint8_t calib_data[24];
@@ -115,6 +113,7 @@ void BMP280_ReadCalibrationData(void) {
 // Compensation function for temperature
 double bmp280_compensate_T_int32(BMP280_S32_t adc_T) {
     double var1, var2, T;
+
     var1 = (((double)adc_T)/16382.0 - ((double)dig_T1)/1024.0) * ((double)dig_T2);
     var2 = ((((double)adc_T)/131072.0 - ((double)dig_T1)/8192.0) * (((double)adc_T)/131072.0 - ((double)dig_T1)/8192.0)) * ((double)dig_T3);
     t_fine = (BMP280_S32_t)(var1 + var2);
@@ -123,7 +122,7 @@ double bmp280_compensate_T_int32(BMP280_S32_t adc_T) {
 }
 
 // Compensation function for pressure
-double bmp280_compensate_P_int64(BMP280_S32_t adc_P) {
+double bmp280_compensate_P_int32(BMP280_S32_t adc_P) {
    double var1, var2, p;
 
    var1 = ((double)t_fine/2.0) - 64000.0;
@@ -152,7 +151,7 @@ float BMP280_GetPressure_hPa(void) {
     // Read raw temperature and pressure data from BMP280
     raw_pressure = BMP280_GetRawPressure();  // Implement this function to read raw pressure
     // Compensate the pressure and convert to hPa
-    BMP280_U32_t pressure_pa = bmp280_compensate_P_int64(raw_pressure);
+    float pressure_pa = bmp280_compensate_P_int32(raw_pressure);
     return pressure_pa / 100.0f;  // Convert Pa to hPa
 }
 
@@ -161,6 +160,6 @@ float BMP280_GetTemperature(void){
 	BMP280_ReadCalibrationData();
 	raw_temp = BMP280_GetRawTemperature();  // Implement this function to read raw temp
 	 // Compensate the temperature to get fine temperature value
-	BMP280_S32_t temperature_c =  bmp280_compensate_T_int32(raw_temp);
-	return temperature_c;
+	float temperature_c =  bmp280_compensate_T_int32(raw_temp);
+	return temperature_c * 1.0f;
 }

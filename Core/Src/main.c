@@ -126,9 +126,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  int32_t raw_tmp = BMP280_ReadTemperature();
-	  float temperature = BMP280_CompensateTemperature(raw_tmp);
-	  sprintf(text,"Temp : %.2f", temperature);
+//	  int32_t raw_tmp = BMP280_ReadTemperature();
+//	  float temperature = BMP280_CompensateTemperature(raw_tmp);
+//	  sprintf(text,"Temp : %.2f", temperature);
+//	  serialPrint(text);
+//	  HAL_Delay(1000);
+
+	  float press = BMP280_GetPressure_hPa();
+	  sprintf(text,"press : %.2f", press);
 	  serialPrint(text);
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */

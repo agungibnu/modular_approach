@@ -132,9 +132,13 @@ int main(void)
 //	  serialPrint(text);
 //	  HAL_Delay(1000);
 
-	  float press = BMP280_GetPressure_hPa();
-	  sprintf(text,"press : %.2f", press);
+	  float temp = BMP280_GetTemperature();
+	  sprintf(text, "Temperature(C) : %.2f", temp);
 	  serialPrint(text);
+	  float press = BMP280_GetPressure_hPa();
+	  sprintf(text,"Pressure(hPa) : %.2f", press);
+	  serialPrint(text);
+
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
